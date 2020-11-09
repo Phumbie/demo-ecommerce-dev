@@ -1,26 +1,50 @@
 <template>
   <div>
     <div class="product">
-      <img
-        style="max-height: 170px; max-width: 100%"
-        src="https://cdn.shopify.com/s/files/1/2960/5204/products/age-management_1024x1024_ad6e7a36-7242-469c-9fb5-242f5ee9c83f_1024x1024.png?v=1602809968"
-        alt=""
-      />
-      <p class="product-description">Modern Bathroom Set</p>
-      <p>From: $52.00</p>
-      <button class="product-button">
+      <div class="image">
+        <img style="max-height: 170px; max-width: 100%" :src="productData.image_url" alt="" />
+      </div>
+      <div>
+        <p class="product-description">{{ productData.title }}</p>
+      </div>
+
+      <p>From: ${{ productData.price }}</p>
+      <button class="product-button" @click="addToCart">
         Add to Cart
       </button>
     </div>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: ["productData"],
+
+  // mounted() {
+  //   console.log(this.productData);
+  // },
+  data() {
+    return {};
+  },
+
+  methods: {
+    addToCart() {
+      this.$store.dispatch("openSideBar", true);
+      this.$store.dispatch("addToCart", this.productData);
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 .product {
   text-align: center;
   padding: 3rem 2rem;
+
+  & .image {
+    height: 170px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
 
   & .product-description {
     font-size: 1.2rem;
@@ -38,12 +62,27 @@ export default {};
     width: 10rem;
     margin-top: 1.5rem;
     border: none;
+    cursor: pointer;
+  }
+  > div {
+    height: 3rem;
   }
 }
 
 @media (max-width: 768px) {
   .product {
     padding: 1rem 0.5rem;
+    // height: 20rem;
+    & .image {
+      height: 170px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+
+      img {
+        object-fit: contain;
+      }
+    }
 
     & .product-description {
       font-size: 0.8rem;
@@ -56,6 +95,10 @@ export default {};
     & .product-button {
       width: 100%;
       padding: 0.7rem 0;
+    }
+
+    > div {
+      height: 3rem;
     }
   }
 }

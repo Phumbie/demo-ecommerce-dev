@@ -1,33 +1,43 @@
 <template>
   <div>
     <div class="body">
-      <h5 class="cancel">X</h5>
+      <h5 class="cancel" @click="removeCart">X</h5>
       <div>
         <div class="body-content">
-          <h5>Classic Maintenence Set</h5>
+          <h5>{{ cartProduct.title }}</h5>
         </div>
         <div class="body-image">
-          <img
-            style="max-height: 5rem; max-width: 100%"
-            src="https://cdn.shopify.com/s/files/1/2960/5204/products/age-management_1024x1024_ad6e7a36-7242-469c-9fb5-242f5ee9c83f_1024x1024.png?v=1602809968 "
-            alt=""
-          />
+          <img style="max-height: 5rem; max-width: 100%" :src="cartProduct.image_url" alt="" />
         </div>
       </div>
       <div class="bottom">
         <div class="count">
-          <button>+</button>
-          <p>0</p>
-          <button>-</button>
+          <button @click="decrement">-</button>
+          <p>{{ cartProduct.amount }}</p>
+          <button @click="increment">+</button>
         </div>
 
-        <div class="price">
-          US$ 177.00
-        </div>
+        <div class="price">${{ cartProduct.price * cartProduct.amount }}</div>
       </div>
     </div>
   </div>
 </template>
+<script>
+export default {
+  props: ["cartProduct"],
+  methods: {
+    removeCart() {
+      this.$store.dispatch("removeFromCart", this.cartProduct.id);
+    },
+    increment() {
+      this.$store.dispatch("incrementCart", this.cartProduct.id);
+    },
+    decrement() {
+      this.$store.dispatch("decrementCart", this.cartProduct.id);
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 .body {
   background-color: white;

@@ -4,7 +4,7 @@
     <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <Header />
     <ShopBody />
-    <SideCart />
+    <SideCart v-if="openCart" />
   </div>
 </template>
 
@@ -20,6 +20,11 @@ export default {
     Header,
     ShopBody,
     SideCart,
+  },
+  computed: {
+    openCart() {
+      return this.$store.state.toggleSideBar;
+    },
   },
 };
 </script>

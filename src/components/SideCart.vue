@@ -3,26 +3,28 @@
     <div class="cart">
       <div></div>
       <div class="cart-section">
-        <h5>Your Cart</h5>
+        <div class="top-cart">
+          <div>
+            <p @click="closeSide"><</p>
+          </div>
+          <h5>Your Cart</h5>
+        </div>
 
         <div class="currency">
-          <select id="cars" name="carlist" form="carform">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="opel">Opel</option>
-            <option value="audi">Audi</option>
+          <select v-model="currentCurrency" id="cars" name="carlist" form="carform">
+            <option :value="current" v-for="(current, index) in currency" :key="index">{{ current }} </option>
           </select>
         </div>
 
         <div class="cart-items">
-          <CartItem v-for="i in 3" :key="i" />
+          <CartItem v-for="cart in cartData" :key="cart.id" :cartProduct="cart" />
         </div>
         <div class="total">
           <div>
             <hr />
             <div class="calculation">
               <h4>Total:</h4>
-              <h5>0</h5>
+              <h5>${{ totalCart }}</h5>
             </div>
           </div>
         </div>
@@ -32,12 +34,50 @@
 </template>
 <script>
 import CartItem from "./CartItem";
+import gql from "graphql-tag";
+
 export default {
   components: {
     CartItem,
   },
+  apollo: {
+    currency: gql`
+      query {
+        currency
+      }
+    `,
+  },
+  data() {
+    return {
+      currentCurrency: "",
+    };
+  },
+  watch: {
+    currentCurrency(val) {
+      this.$store.commit("SET_CURRENCY", val);
+      // console.log(val);
+    },
+  },
+
   mounted() {
     document.body.style.overflow = "hidden";
+  },
+  beforeDestroy() {
+    document.body.style.overflow = "initial";
+  },
+  computed: {
+    cartData() {
+      return this.$store.state.cart;
+      console.log(this.$store.state.cart);
+    },
+    totalCart() {
+      return this.$store.getters.totalCart;
+    },
+  },
+  methods: {
+    closeSide() {
+      this.$store.dispatch("openSideBar", false);
+    },
   },
 };
 </script>
@@ -72,8 +112,9 @@ export default {
 
 .cart-items {
   //   overflow-y: auto;
-  height: 100%;
+  height: calc(100% - 11rem);
   overflow: auto;
+
   //   margin-top: 1rem;
 }
 
@@ -98,6 +139,9 @@ export default {
     display: flex;
     justify-content: space-between;
   }
+  hr {
+    margin: 0.5rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -110,5 +154,23 @@ export default {
   //   .total {
   //     position: initial;
   //   }
+}
+
+.top-cart {
+  display: flex;
+  margin: 1rem;
+
+  > div {
+    border-radius: 50%;
+    border: 1px solid black;
+    width: 1rem;
+    height: 1rem;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  h5 {
+    width: 100%;
+  }
 }
 </style>

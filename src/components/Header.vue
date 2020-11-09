@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="cart">
+    <div class="cart" @click="openCart">
       <img style="width: 20px; height: 20px" src="@/assets/shopping-cart.svg" alt="" />
     </div>
     <div class="header-content">
@@ -9,6 +9,16 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    openCart() {
+      this.$store.dispatch("openSideBar", true);
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 .header {
   background-color: #f5f5f4;
