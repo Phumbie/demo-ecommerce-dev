@@ -61,12 +61,14 @@ export default {
   // },
   mounted() {
     this.getProducts().then((response) => {
+      this.$store.commit("TOGGLE_LOADER", false);
       this.products = response.data.products;
     });
   },
   watch: {
     currency(val) {
       this.getProducts().then((response) => {
+        this.$store.commit("TOGGLE_LOADER", false);
         this.products = response.data.products;
         this.$store.dispatch("updateCartCurrency", this.products);
       });
@@ -81,6 +83,7 @@ export default {
 
   methods: {
     getProducts() {
+      this.$store.commit("TOGGLE_LOADER", true);
       const GET_PRODUCTS = gql`
         query getProducts {
           products {
@@ -102,6 +105,7 @@ export default {
 .body {
   background-color: #e2e6e3;
   padding: 5rem 0rem;
+  min-height: 100%;
 
   & .container {
     width: 85%;

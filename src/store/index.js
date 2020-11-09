@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     toggleSideBar: false,
     cart: [],
+    loader: false,
     currency: "USD",
   },
   plugins: [createPersistedState()],
@@ -54,6 +55,9 @@ export default new Vuex.Store({
           state.cart[index].price = item.price;
         }
       });
+    },
+    TOGGLE_LOADER(state, payload) {
+      state.loader = payload;
     },
   },
   actions: {

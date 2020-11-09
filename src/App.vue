@@ -1,9 +1,18 @@
 <template>
   <div id="app">
     <router-view />
+    <Loader />
   </div>
 </template>
 
+<script>
+import Loader from "./components/partials/loader";
+export default {
+  components: {
+    Loader,
+  },
+};
+</script>
 <style lang="scss">
 * {
   padding: 0;

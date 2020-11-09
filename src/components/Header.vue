@@ -2,6 +2,7 @@
   <div class="header">
     <div class="cart" @click="openCart">
       <img style="width: 20px; height: 20px" src="@/assets/shopping-cart.svg" alt="" />
+      <sup>{{ $store.state.cart.length }}</sup>
     </div>
     <div class="header-content">
       <h1>All Products</h1>
