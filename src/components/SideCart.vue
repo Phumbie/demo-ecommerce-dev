@@ -96,6 +96,7 @@ export default {
     background-color: #f2f2ef;
     padding: 2rem 1rem;
     position: relative;
+    animation: slideinLeft 0.5s ease-out;
     // overflow: auto;
 
     h5 {
@@ -171,6 +172,15 @@ export default {
 
   h5 {
     width: 100%;
+  }
+}
+
+@keyframes slideinLeft {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateY(0);
   }
 }
 </style>
