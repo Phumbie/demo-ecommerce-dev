@@ -60,18 +60,30 @@ export default {
   //   },
   // },
   mounted() {
-    this.getProducts().then((response) => {
-      this.$store.commit("TOGGLE_LOADER", false);
-      this.products = response.data.products;
-    });
+    this.getProducts()
+      .then((response) => {
+        this.$store.commit("TOGGLE_LOADER", false);
+        this.products = response.data.products;
+      })
+      .catch((e) => {
+        this.$store.commit("TOGGLE_LOADER", false);
+        alert("error loading, please try again");
+        console.log(e);
+      });
   },
   watch: {
     currency(val) {
-      this.getProducts().then((response) => {
-        this.$store.commit("TOGGLE_LOADER", false);
-        this.products = response.data.products;
-        this.$store.dispatch("updateCartCurrency", this.products);
-      });
+      this.getProducts()
+        .then((response) => {
+          this.$store.commit("TOGGLE_LOADER", false);
+          this.products = response.data.products;
+          this.$store.dispatch("updateCartCurrency", this.products);
+        })
+        .catch((e) => {
+          this.$store.commit("TOGGLE_LOADER", false);
+          alert("error loading, please try again");
+          console.log(e);
+        });
     },
   },
 

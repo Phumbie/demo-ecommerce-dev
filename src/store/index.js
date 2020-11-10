@@ -4,6 +4,10 @@ import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
+const dataState = createPersistedState({
+  paths: ["cart", "currency"],
+});
+
 export default new Vuex.Store({
   state: {
     toggleSideBar: false,
@@ -11,7 +15,7 @@ export default new Vuex.Store({
     loader: false,
     currency: "USD",
   },
-  plugins: [createPersistedState()],
+  plugins: [dataState],
   mutations: {
     OPEN_SIDE_BAR(state, payload) {
       state.toggleSideBar = payload;
