@@ -17,7 +17,7 @@
           <button @click="increment">+</button>
         </div>
 
-        <div class="price">${{ cartProduct.price * cartProduct.amount }}</div>
+        <div class="price">{{ $store.state.currency }}{{ cartProduct.price * cartProduct.amount }}</div>
       </div>
     </div>
   </div>

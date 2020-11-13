@@ -8,7 +8,7 @@
         <p class="product-description">{{ productData.title }}</p>
       </div>
 
-      <p>From: ${{ productData.price }}</p>
+      <p>From: {{ $store.state.currency }}{{ productData.price }}</p>
       <button class="product-button" @click="addToCart">
         Add to Cart
       </button>
