@@ -13,7 +13,7 @@ export default new Vuex.Store({
     toggleSideBar: false,
     cart: [],
     loader: false,
-    currency: "USD",
+    currency: "AUD",
   },
   plugins: [dataState],
   mutations: {
