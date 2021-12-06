@@ -1,5 +1,5 @@
 <template>
-  <div class="body">
+  <div class="body" v-if="!loader">
     <div class="container">
       <SingleProduct
         v-for="product in products"
@@ -36,6 +36,7 @@
   </div>
 </template>
 <script>
+  import { mapActions } from "vuex";
   import SingleProduct from "./SingleProduct";
   import gql from "graphql-tag";
   export default {
@@ -71,7 +72,12 @@
         })
         .catch((e) => {
           this.$store.commit("TOGGLE_LOADER", false);
-          alert("error loading, please try again");
+          // alert("error loading, please try again");
+          this.showAlert({
+            display: true,
+            description: "error loading products, please try again",
+            type: "error",
+          });
           console.log(e);
         });
     },
@@ -85,7 +91,12 @@
           })
           .catch((e) => {
             this.$store.commit("TOGGLE_LOADER", false);
-            alert("error loading, please try again");
+            // alert("error loading, please try again");
+            this.showAlert({
+              display: true,
+              description: "error loading products, please try again",
+              type: "error",
+            });
             console.log(e);
           });
       },
@@ -95,9 +106,13 @@
       currency() {
         return this.$store.state.currency;
       },
+      loader() {
+        return this.$store.state.loader;
+      },
     },
 
     methods: {
+      ...mapActions(["showAlert"]),
       getProducts() {
         this.$store.commit("TOGGLE_LOADER", true);
         const GET_PRODUCTS = gql`
@@ -120,7 +135,7 @@
 <style lang="scss" scoped>
   .body {
     background-color: #e2e6e3;
-    padding: 5rem 0rem;
+    padding: 2rem 0rem;
     min-height: 100%;
 
     & .container {

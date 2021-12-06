@@ -14,6 +14,11 @@ export default new Vuex.Store({
     cart: [],
     loader: false,
     currency: "AUD",
+    alert: {
+      type: "",
+      description: "",
+      display: false,
+    },
   },
   plugins: [dataState],
   mutations: {
@@ -63,6 +68,9 @@ export default new Vuex.Store({
     TOGGLE_LOADER(state, payload) {
       state.loader = payload;
     },
+    SHOW_ALERT: (state, payload) => {
+      state.alert = payload;
+    },
   },
   actions: {
     openSideBar: ({ commit }, payload) => {
@@ -88,6 +96,10 @@ export default new Vuex.Store({
     },
     updateCartCurrency: ({ commit }, payload) => {
       commit("UPDATE_CART_CURRENCY", payload);
+    },
+
+    showAlert: ({ commit }, payload) => {
+      commit("SHOW_ALERT", payload);
     },
   },
   getters: {

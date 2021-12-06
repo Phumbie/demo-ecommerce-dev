@@ -3,7 +3,7 @@
     <div class="product">
       <div class="image">
         <img
-          style="height: 170px; max-width: 90%"
+          style="max-height: 100%; max-width: 70%"
           :src="productData.image_url"
           alt=""
         />

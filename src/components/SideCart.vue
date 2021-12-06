@@ -4,8 +4,8 @@
       <div></div>
       <div class="cart-section">
         <div class="top-cart">
-          <div>
-            <p @click="closeSide"><</p>
+          <div @click="closeSide">
+            <p><</p>
           </div>
           <h5>Your Cart</h5>
         </div>
@@ -42,6 +42,7 @@
   </div>
 </template>
 <script>
+  import { mapActions } from "vuex";
   import CartItem from "./CartItem";
   import gql from "graphql-tag";
   import ZillaConnect from "@/zillaConnect";
@@ -84,6 +85,7 @@
       },
     },
     methods: {
+      ...mapActions(["showLAert"]),
       closeSide() {
         this.$store.dispatch("openSideBar", false);
       },
@@ -94,15 +96,22 @@
         // handler.openbyId(configA);
         let config = {
           onLoad: () => console.log("Widget loaded successfully"),
-          onSuccess: (data) =>
-            console.log("successful payment from main app", data),
+          onSuccess: (data) => this.handleZillaSuccess(data),
           clientOrderReference: new Date(),
-          title: "Macbook",
+          title: "Zilla Bio-cosmetics",
           amount: this.totalCart,
           publicKey:
             "PK_PROD_fb250b276f6fa2a5ebad0d57ba215596c3950e38c2f9d9570fb107c7919d7749",
         };
         zillaConnect.openNew(config);
+      },
+      handleZillaSuccess(data) {
+        this.closeSide();
+        this.showAlert({
+          display: true,
+          description: "Payment successful, thank you for shopping with us",
+          type: "success",
+        });
       },
     },
   };
@@ -164,15 +173,16 @@
     & .checkout-container {
       display: flex;
       justify-content: end;
-      margin-top: 1rem;
+      margin-top: 1.5rem;
     }
     & .checkout-button {
-      padding: 1rem 1.5rem;
+      padding: 1.2rem 1.5rem;
       border: none;
       border-radius: 8px;
       background: #c70039;
       color: white;
       cursor: pointer;
+      width: 100%;
     }
     & .calculation {
       display: flex;
