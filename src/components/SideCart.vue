@@ -94,10 +94,10 @@
         let config = {
           onLoad: () => console.log("Widget loaded successfully"),
           onSuccess: (data) => this.handleZillaSuccess(data),
-          onEvent: (eventName, data) => {
-            console.log(eventName);
-            console.log(data);
-          },
+          // onEvent: (eventName, data) => {
+          //   console.log(eventName);
+          //   console.log(data);
+          // },
           clientOrderReference: new Date(),
           title: "Zilla Bio-cosmetics",
           amount: this.totalCart,
