@@ -175,7 +175,7 @@
     }
     & .checkout-container {
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       margin-top: 1.5rem;
     }
     & .checkout-button {
