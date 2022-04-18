@@ -73,6 +73,7 @@
       margin-top: 1.5rem;
       border: 1.3px solid #a699df;
       cursor: pointer;
+      font-weight: semibold;
     }
     > div {
       height: 3rem;

@@ -45,6 +45,7 @@
       text-align: center;
       p {
         margin-top: 1.5rem;
+        font-weight: semibold;
       }
     }
   }

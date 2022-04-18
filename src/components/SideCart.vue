@@ -192,7 +192,7 @@
       color: white;
       cursor: pointer;
       width: 100%;
-      font-size: 700;
+      font-size: semibold;
     }
     & .calculation {
       display: flex;
