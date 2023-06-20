@@ -1,5 +1,5 @@
 <template>
-  <div class="body" v-if="!loader">
+  <div class="body">
     <div class="container">
       <SingleProduct
         v-for="product in products"
@@ -39,6 +39,7 @@
   import { mapActions } from "vuex";
   import SingleProduct from "./SingleProduct";
   import gql from "graphql-tag";
+  import products from "@/database/products.json";
   export default {
     components: {
       SingleProduct,
@@ -46,7 +47,8 @@
     data() {
       return {
         // currency: "USD",
-        products: [],
+        // products: [],
+        products: products,
       };
     },
     // apollo: {
@@ -64,52 +66,52 @@
     //     },
     //   },
     // },
-    mounted() {
-      this.getProducts()
-        .then((response) => {
-          this.$store.commit("TOGGLE_LOADER", false);
-          this.products = response.data.products;
-        })
-        .catch((e) => {
-          this.$store.commit("TOGGLE_LOADER", false);
-          // alert("error loading, please try again");
-          this.showAlert({
-            display: true,
-            description: "error loading products, please try again",
-            type: "error",
-          });
-          console.log(e);
-        });
-    },
-    watch: {
-      currency(val) {
-        this.getProducts()
-          .then((response) => {
-            this.$store.commit("TOGGLE_LOADER", false);
-            this.products = response.data.products;
-            this.$store.dispatch("updateCartCurrency", this.products);
-          })
-          .catch((e) => {
-            this.$store.commit("TOGGLE_LOADER", false);
-            // alert("error loading, please try again");
-            this.showAlert({
-              display: true,
-              description: "error loading products, please try again",
-              type: "error",
-            });
-            console.log(e);
-          });
-      },
-    },
+    // mounted() {
+    //   this.getProducts()
+    //     .then((response) => {
+    //       this.$store.commit("TOGGLE_LOADER", false);
+    //       this.products = response.data.products;
+    //     })
+    //     .catch((e) => {
+    //       this.$store.commit("TOGGLE_LOADER", false);
+    //       // alert("error loading, please try again");
+    //       this.showAlert({
+    //         display: true,
+    //         description: "error loading products, please try again",
+    //         type: "error",
+    //       });
+    //       console.log(e);
+    //     });
+    // },
+    // watch: {
+    //   currency(val) {
+    //     this.getProducts()
+    //       .then((response) => {
+    //         this.$store.commit("TOGGLE_LOADER", false);
+    //         this.products = response.data.products;
+    //         this.$store.dispatch("updateCartCurrency", this.products);
+    //       })
+    //       .catch((e) => {
+    //         this.$store.commit("TOGGLE_LOADER", false);
+    //         // alert("error loading, please try again");
+    //         this.showAlert({
+    //           display: true,
+    //           description: "error loading products, please try again",
+    //           type: "error",
+    //         });
+    //         console.log(e);
+    //       });
+    //   },
+    // },
 
-    computed: {
-      currency() {
-        return this.$store.state.currency;
-      },
-      loader() {
-        return this.$store.state.loader;
-      },
-    },
+    // computed: {
+    //   currency() {
+    //     return this.$store.state.currency;
+    //   },
+    //   loader() {
+    //     return this.$store.state.loader;
+    //   },
+    // },
 
     methods: {
       ...mapActions(["showAlert"]),
@@ -134,21 +136,22 @@
 </script>
 <style lang="scss" scoped>
   .body {
-    background-color: #e2e6e3;
+    /* background-color: #f7f5ff; */
     padding: 2rem 0rem;
     min-height: 100%;
 
     & .container {
       width: 85%;
+      max-width: 1536px;
       margin: auto;
       display: grid;
-      grid-template-columns: repeat(3, auto);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 768px) {
     .container {
-      grid-template-columns: repeat(2, auto) !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
       width: 90%;
     }
   }

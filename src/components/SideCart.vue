@@ -45,7 +45,7 @@
   import { mapActions } from "vuex";
   import CartItem from "./CartItem";
   import gql from "graphql-tag";
-  import ZillaConnect from "@/zillaConnect";
+  // import Connect from "../Sdk/connect";
   export default {
     components: {
       CartItem,
@@ -85,28 +85,31 @@
       },
     },
     methods: {
-      ...mapActions(["showLAert"]),
+      ...mapActions(["showAlert", "emptyCart"]),
       closeSide() {
         this.$store.dispatch("openSideBar", false);
       },
       checkoutWithZilla() {
-        const zillaConnect = new ZillaConnect();
-
-        // const handler = new Connect();
-        // handler.openbyId(configA);
+        const zillaConnect = new Connect();
         let config = {
           onLoad: () => console.log("Widget loaded successfully"),
           onSuccess: (data) => this.handleZillaSuccess(data),
+          // onEvent: (eventName, data) => {
+          //   console.log(eventName);
+          //   console.log(data);
+          // },
           clientOrderReference: new Date(),
           title: "Zilla Bio-cosmetics",
           amount: this.totalCart,
           publicKey:
-            "PK_PROD_fb250b276f6fa2a5ebad0d57ba215596c3950e38c2f9d9570fb107c7919d7749",
+            "PK_SANDBOX_5b78bbb6c45299f27d8210164df036368424f46f147fb263cb7b3f0d07911e8f",
         };
         zillaConnect.openNew(config);
       },
       handleZillaSuccess(data) {
+        console.log(data);
         this.closeSide();
+        this.emptyCart();
         this.showAlert({
           display: true,
           description: "Payment successful, thank you for shopping with us",
@@ -172,17 +175,24 @@
     }
     & .checkout-container {
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       margin-top: 1.5rem;
     }
     & .checkout-button {
       padding: 1.2rem 1.5rem;
       border: none;
       border-radius: 8px;
-      background: #c70039;
+      background: linear-gradient(
+          217.04deg,
+          #c6003b -191.09%,
+          #6a30c3 77.43%,
+          #63dfdf 156.06%
+        ),
+        #6a30c3;
       color: white;
       cursor: pointer;
       width: 100%;
+      font-size: semibold;
     }
     & .calculation {
       display: flex;
